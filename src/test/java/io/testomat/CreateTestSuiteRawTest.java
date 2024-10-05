@@ -1,45 +1,61 @@
 package io.testomat;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
+import io.testomat.web.asserts.TestSuitesPageAsserts;
+import io.testomat.web.pages.LoginPage;
+import io.testomat.web.pages.ProjectsPage;
+import io.testomat.web.pages.TestSuitesPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Selenide.*;
+import static io.testomat.web.pages.LoginPage.CredsWithRoles.*;
 
 public class CreateTestSuiteRawTest {
 
     Faker faker = new Faker();
 
+    private final LoginPage loginPage = new LoginPage();
+
+    static {
+        Configuration.baseUrl = "https://app.testomat.io";
+    }
+
     @Test
     @DisplayName("Should Be Possible To Create Test Suite For New Project")
     void shouldBePossibleToCreateTestSuiteForNewProject() {
-        open("https://app.testomat.io/users/sign_in");
-        loginUser("mmax68955@gmail.com", "d#6m@$MnPzEyg7Z");
 
-        $("#content-desktop h2").shouldBe(Condition.visible);
-        $("[href='/projects/new']").click();
+        open("/users/sign_in");
+        loginPage
+                .isLoaded()
+//                .loginUser("mmax68955@gmail.com", "d#6m@$MnPzEyg7Z");
+                .loginUser(MANAGER);
 
-        $("#project-form #project_title").setValue(faker.commerce().department());
-        $("[name='commit']").click();
+        new ProjectsPage()
+                .isLoaded()
+                .clickOnNewProjectButton()
+                .fillProjectTitle(faker.commerce().department())
+                .submitProjectCreation();
 
-        $("[placeholder='First Suite']").shouldBe(Condition.visible);
-        $(".back").click();
         String targetTestSuite = faker.commerce().productName();
-        $("[placeholder='First Suite']")
-                .setValue(targetTestSuite)
-                .pressEnter();
 
-        $$(".dragSortItem").shouldHave(CollectionCondition.size(1));
-        $(".dragSortList").shouldHave(Condition.text(targetTestSuite));
+        new TestSuitesPage()
+                .isLoaded()
+                .closeReadmeModal()
+                .fillFirstTestSuiteName(targetTestSuite)
+
+                //todo just as an option:
+                .asserts()
+                .listShouldHaveSize(1)
+                .firstTestSuiteInListShouldHaveText(targetTestSuite);
+
+
+        //just for example
+        new TestSuitesPageAsserts()
+                .listShouldHaveSize(1)
+                .firstTestSuiteInListShouldHaveText(targetTestSuite);
+
     }
 
-    private static void loginUser(String mail, String password) {
-        $("#content-desktop #user_email").setValue(mail);
-        $("#content-desktop #user_password").setValue(password);
-        $("#content-desktop [name='commit']").click();
-    }
 }

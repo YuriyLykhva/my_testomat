@@ -1,6 +1,7 @@
-package io.testomat;
+package io.testomat.selenide;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.junit5.TextReportExtension;
 import com.github.javafaker.Faker;
 import io.testomat.web.asserts.TestSuitesPageAsserts;
 import io.testomat.web.pages.LoginPage;
@@ -8,11 +9,13 @@ import io.testomat.web.pages.ProjectsPage;
 import io.testomat.web.pages.TestSuitesPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.codeborne.selenide.Selenide.*;
 import static io.testomat.web.pages.LoginPage.CredsWithRoles.*;
 
-public class CreateTestSuiteRawTest {
+@ExtendWith(TextReportExtension.class)
+public class CreateTestSuitePOTest {
 
     Faker faker = new Faker();
 

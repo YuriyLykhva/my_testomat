@@ -1,42 +1,44 @@
-package io.testomat.selenide;
+package io.testomat.playwright;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.junit5.TextReportExtension;
 import com.github.javafaker.Faker;
-import io.testomat.web.asserts.TestSuitesPageAsserts;
+import io.testomat.common.PWContextExtension;
+import io.testomat.common.pw.Configuration;
+import io.testomat.common.pw.PlaywrightWrapper;
+import io.testomat.web.asserts.pw.TestSuitesPageAssertsPW;
 import io.testomat.web.pages.LoginPage;
-import io.testomat.web.pages.ProjectsPage;
-import io.testomat.web.pages.TestSuitesPage;
+import io.testomat.web.pages.pw.LoginPagePW;
+import io.testomat.web.pages.pw.ProjectsPagePW;
+import io.testomat.web.pages.pw.TestSuitesPagePW;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static com.codeborne.selenide.Selenide.*;
-import static io.testomat.web.pages.LoginPage.CredsWithRoles.*;
-
-@ExtendWith(TextReportExtension.class)
-public class CreateTestSuitePOTest {
+@ExtendWith(PWContextExtension.class)
+public class PWWrapperTests {
 
     Faker faker = new Faker();
 
-    private final LoginPage loginPage = new LoginPage();
+    private final LoginPagePW loginPage = new LoginPagePW();
 
     static {
         Configuration.baseUrl = "https://app.testomat.io";
+        Configuration.headless = false;
+        Configuration.saveTraces = true;
+        Configuration.poolingInterval = 100;
     }
 
     @Test
     @DisplayName("Should Be Possible To Create Test Suite For New Project")
     void shouldBePossibleToCreateTestSuiteForNewProject() {
 
-        open("/users/sign_in");
+        PlaywrightWrapper.open("/users/sign_in");
         loginPage
                 .isLoaded()
 //                .loginUser("mmax68955@gmail.com", "d#6m@$MnPzEyg7Z");
 //                .loginUser("yu1.0710@yopmail.com", "ZSx5EN!FHFvrubH");
-                .loginUser(YUKO);
+                .loginUser(LoginPage.CredsWithRoles.YUKO);
 
-        new ProjectsPage()
+        new ProjectsPagePW()
                 .isLoaded()
                 .clickOnNewProjectButton()
                 .fillProjectTitle(faker.commerce().department())
@@ -44,7 +46,7 @@ public class CreateTestSuitePOTest {
 
         String targetTestSuite = faker.commerce().productName();
 
-        new TestSuitesPage()
+        new TestSuitesPagePW()
                 .isLoaded()
                 .closeReadmeModal()
                 .fillFirstTestSuiteName(targetTestSuite)
@@ -56,10 +58,9 @@ public class CreateTestSuitePOTest {
 
 
         //just for example
-        new TestSuitesPageAsserts()
+        new TestSuitesPageAssertsPW()
                 .listShouldHaveSize(1)
                 .firstTestSuiteInListShouldHaveText(targetTestSuite);
 
     }
-
 }

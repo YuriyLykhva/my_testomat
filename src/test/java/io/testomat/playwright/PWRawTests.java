@@ -25,7 +25,7 @@ public class PWRawTests {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
                 .setChannel("chrome")
                 .setHeadless(false)
-                .setSlowMo(50)
+                .setSlowMo(0)
         );
     }
 
@@ -43,9 +43,9 @@ public class PWRawTests {
         PlaywrightAssertions.assertThat(page.locator("#content-desktop #new_user")).isVisible(
                 new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
 
-        page.locator("#content-desktop #user_email").first().fill("mmax68955@gmail.com");
+        page.locator("#content-desktop #user_email").first().fill("yu1.0710@yopmail.com");
         Locator passwordField = page.locator("#content-desktop #user_password");
-        passwordField.fill("d#6m@$MnPzEyg7Z");
+        passwordField.fill("ZSx5EN!FHFvrubH");
         passwordField.press("Enter");
 
         isHidden(passwordField);
@@ -55,7 +55,7 @@ public class PWRawTests {
 
     @Test
     @DisplayName("first test on playwright")
-    void firstTestOnPlaywrigh() {
+    void firstTestOnPlaywright() {
         page.locator("#project_title").fill(faker.book().title());
 
         page.locator("[name='commit']").click();

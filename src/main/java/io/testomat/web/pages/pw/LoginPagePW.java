@@ -1,42 +1,40 @@
-package io.testomat.web.pages;
+package io.testomat.web.pages.pw;
 
-import com.codeborne.selenide.Condition;
+import io.testomat.common.pw.conditions.Condition;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
-public class LoginPage extends BasePage {
+public class LoginPagePW extends BasePage {
 
-    public LoginPage isLoaded() {
+    public LoginPagePW isLoaded() {
         f("h2").shouldHave(Condition.text("Sign in"));
         return this;
     }
 
-    public LoginPage loginUser(String mail, String password) {
+    public void loginUser(String mail, String password) {
         fillEmail(mail);
         fillPassword(password);
         submitLogin();
-        return this;
     }
 
-    public LoginPage loginUser(CredsWithRoles targetUser) {
+    public void loginUser(io.testomat.web.pages.LoginPage.CredsWithRoles targetUser) {
         fillEmail(targetUser.mail);
         fillPassword(targetUser.password);
         submitLogin();
-        return this;
     }
 
-    public LoginPage submitLogin() {
+    public LoginPagePW submitLogin() {
         f("[name='commit']").click();
         return this;
     }
 
-    public LoginPage fillPassword(String password) {
+    public LoginPagePW fillPassword(String password) {
         f("#user_password").setValue(password);
         return this;
     }
 
-    public LoginPage fillEmail(String mail) {
+    public LoginPagePW fillEmail(String mail) {
         f("#user_email").setValue(mail);
         return this;
     }
@@ -54,8 +52,8 @@ public class LoginPage extends BasePage {
         MANAGER("mmax68955@gmail.com", "d#6m@$MnPzEyg7Z"),
         YUKO("yu1.0710@yopmail.com", "ZSx5EN!FHFvrubH");
 
-        public final String mail;
-        public final String password;
+        private final String mail;
+        private final String password;
 
     }
 
@@ -64,9 +62,9 @@ public class LoginPage extends BasePage {
     @Getter
     public enum CredsWithRolesAnother {
 
-        MANAGER(new Creds("mmax68955@gmail.com", "d#6m@$MnPzEyg7Z"));
+        MANAGER(new io.testomat.web.pages.LoginPage.Creds("mmax68955@gmail.com", "d#6m@$MnPzEyg7Z"));
 
-        private final Creds creds;
+        private final io.testomat.web.pages.LoginPage.Creds creds;
 
     }
 }

@@ -16,7 +16,10 @@ dependencies {
     implementation(
             'com.codeborne:selenide:7.4.2',
             'com.github.javafaker:javafaker:1.0.2',
-            'com.microsoft.playwright:playwright:1.47.0'
+            'com.microsoft.playwright:playwright:1.47.0',
+            'com.fasterxml.jackson.core:jackson-databind:2.18.1',
+            'io.rest-assured:rest-assured:5.5.0',
+            'org.assertj:assertj-core:3.26.3'
     )
 
     testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.6'

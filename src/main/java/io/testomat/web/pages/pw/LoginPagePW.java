@@ -1,6 +1,6 @@
 package io.testomat.web.pages.pw;
 
-import io.testomat.common.pw.conditions.Condition;
+import io.testomat.web.common.pw.conditions.Condition;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

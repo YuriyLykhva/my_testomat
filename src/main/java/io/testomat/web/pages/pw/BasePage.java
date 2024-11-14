@@ -1,8 +1,8 @@
 package io.testomat.web.pages.pw;
 
-import io.testomat.common.pw.LocatorActions;
+import io.testomat.web.common.pw.LocatorActions;
 
-import static io.testomat.common.pw.PlaywrightWrapper.*;
+import static io.testomat.web.common.pw.PlaywrightWrapper.*;
 
 
 public class BasePage {

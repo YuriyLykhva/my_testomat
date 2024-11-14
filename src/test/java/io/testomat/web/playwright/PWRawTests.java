@@ -1,4 +1,4 @@
-package io.testomat.playwright;
+package io.testomat.web.playwright;
 
 import com.github.javafaker.Faker;
 import com.microsoft.playwright.*;

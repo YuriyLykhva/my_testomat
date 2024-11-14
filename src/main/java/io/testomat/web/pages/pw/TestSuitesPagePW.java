@@ -1,10 +1,10 @@
 package io.testomat.web.pages.pw;
 
-import io.testomat.common.pw.LocatorActions;
+import io.testomat.web.common.pw.LocatorActions;
 import io.testomat.web.asserts.pw.TestSuitesPageAssertsPW;
 
-import static io.testomat.common.pw.PlaywrightWrapper.$;
-import static io.testomat.common.pw.conditions.Condition.visible;
+import static io.testomat.web.common.pw.PlaywrightWrapper.$;
+import static io.testomat.web.common.pw.conditions.Condition.visible;
 
 
 public class TestSuitesPagePW extends BasePage {
